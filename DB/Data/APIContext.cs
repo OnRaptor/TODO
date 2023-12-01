@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DB.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,7 @@ namespace DB.Data
     {
         public APIContext(DbContextOptions<APIContext> options) : base(options)
         { }
-        public DbSet<User> Users { get; set; }
-        public DbSet<TODO> Tasks { get; set; }
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<TODO> Tasks { get; set; } = null!;
     }
 }
