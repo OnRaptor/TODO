@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DB.Models
 {
-    public class TODO
+    public class ToDoTask
     {
         public int Id {  get; set; }
         public string Name { get; set; }

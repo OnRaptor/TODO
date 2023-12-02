@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34321.82
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO.API", "TODO.API\TODO.API.csproj", "{612AEC02-8339-4DA7-9953-31E127528DA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TODO.API", "TODO.API\TODO.API.csproj", "{612AEC02-8339-4DA7-9953-31E127528DA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{6CE9DA4C-9FC5-4BD6-AC86-C75618924059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DB", "DB\DB.csproj", "{6CE9DA4C-9FC5-4BD6-AC86-C75618924059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{768CFAD4-3AB1-43C7-B80A-DBF7CE83CFEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{6CE9DA4C-9FC5-4BD6-AC86-C75618924059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CE9DA4C-9FC5-4BD6-AC86-C75618924059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CE9DA4C-9FC5-4BD6-AC86-C75618924059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{768CFAD4-3AB1-43C7-B80A-DBF7CE83CFEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{768CFAD4-3AB1-43C7-B80A-DBF7CE83CFEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{768CFAD4-3AB1-43C7-B80A-DBF7CE83CFEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{768CFAD4-3AB1-43C7-B80A-DBF7CE83CFEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
