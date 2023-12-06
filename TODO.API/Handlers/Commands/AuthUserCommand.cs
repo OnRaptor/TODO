@@ -21,7 +21,9 @@ namespace TODO.API.Handlers.Commands
         {
             if (await _userService.VerifyUser(request.username, request.password))
             {
-                var claims = new List<Claim> { new Claim(ClaimTypes.Name, request.username) };
+                var user = await _userService.FindUserByUserName(request.username);
+
+                var claims = new List<Claim> { new Claim("UUID", user!.Id.ToString()) };
                 // создаем JWT-токен
                 var jwt = new JwtSecurityToken(
                         issuer: AuthOptions.ISSUER,

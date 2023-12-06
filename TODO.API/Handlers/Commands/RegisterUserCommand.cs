@@ -20,10 +20,8 @@ namespace TODO.API.Handlers.Commands
         public async Task<string> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _userService.CreateUser(request.user, request.password);
-            if (user == null)
-                throw new BadHttpRequestException("User not found");
 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Hash, user.UserName) };
+            var claims = new List<Claim> { new Claim("UUID", user.Id.ToString()) };
             // создаем JWT-токен
             var jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,
@@ -34,5 +32,7 @@ namespace TODO.API.Handlers.Commands
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
+
+
     }
 }

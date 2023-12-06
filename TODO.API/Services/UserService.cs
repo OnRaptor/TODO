@@ -38,5 +38,24 @@ namespace TODO.API.Services
             else 
                 return false;
         }
+
+        public async Task<User?> FindUserByUserName(string username)
+        {
+            var match = await (
+                       from u in _context.Users
+                       where u.UserName == username
+                       select u
+                       ).FirstOrDefaultAsync();
+
+            return match ?? null;
+        }
+
+        public async Task<User?> FindUserByUUID(string UUID)
+        {
+            var uuid = Guid.Parse(UUID);
+            var match = await _context.Users.FindAsync(uuid);
+
+            return match ?? null;
+        }
     }
 }
