@@ -13,7 +13,7 @@ namespace Domain.DTO
         public string Description { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime Deadline { get; set; }
-        public string Priority { get; set; }
+        public TaskPriority Priority { get; set; }
         public bool IsCompleted { get; set; }
     }
 }

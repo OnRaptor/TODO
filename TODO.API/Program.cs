@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using System.Reflection;
 using TODO.API;
 using TODO.API.Common;
 using TODO.API.Middlewares;
@@ -75,7 +78,12 @@ builder.Services.AddMediatR(options => {
     options.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
-
+builder.Services.AddFluentValidationAutoValidation(configuration =>
+{
+    // Disable the built-in .NET model (data annotations) validation.
+    configuration.DisableBuiltInModelValidation = true;
+});
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
 
 var app = builder.Build();
 

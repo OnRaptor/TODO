@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -9,13 +11,17 @@ namespace DB.Models
 {
     public class ToDoTask
     {
-        public int Id {  get; set; }
+        public Guid Id {  get; set; }
+        [DefaultValue("Задача")]
         public string Name { get; set; }
+        [DefaultValue("Выполнить задачу")]
         public string Description { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime Deadline {  get; set; }
-        public string Priority { get; set; }
+        [DefaultValue(TaskPriority.High)]
+        public TaskPriority Priority { get; set; }
         public bool IsCompleted { get; set; }
+        public Guid AuthorId { get; set; }
         public User Author { get; set; }
     }
 }
