@@ -3,9 +3,9 @@ using TODO.API.Handlers.Commands;
 
 namespace TODO.API.Validators.Commands
 {
-    public class AuthUserValidations : AbstractValidator<AuthUserCommand>
+    public class AuthUserValidator : AbstractValidator<AuthUserCommand>
     {
-        public AuthUserValidations() 
+        public AuthUserValidator() 
         {
             RuleFor(x => x.username).NotEmpty();
             RuleFor(x => x.password).NotEmpty();

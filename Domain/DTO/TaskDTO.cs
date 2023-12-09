@@ -9,6 +9,7 @@ namespace Domain.DTO
 {
     public class TaskDTO
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         [DataType(DataType.DateTime)]

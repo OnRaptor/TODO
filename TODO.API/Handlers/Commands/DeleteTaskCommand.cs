@@ -14,7 +14,7 @@ namespace TODO.API.Handlers.Commands
         }
         public async Task Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
         {
-
+            await this._taskService.DeleteTask(Guid.Parse(request.taskID));
         }
     }
 }

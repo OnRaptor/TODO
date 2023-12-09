@@ -8,7 +8,7 @@ using TODO.API.Handlers.Queries;
 
 namespace TODO.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [Authorize]
     [ApiController]
     public class TasksController : ControllerBase
@@ -26,5 +26,14 @@ namespace TODO.API.Controllers
         [HttpGet("tasks")]
         public async Task<IActionResult> GetUserTasks()
             => Ok(await _mediator.Send(new GetTasksQuery(User.Claims.FirstOrDefault().Value)));
+        [HttpDelete("tasks/{taskId}")]
+        public async Task<IActionResult> DeleteTask(string taskId)
+        {
+            await _mediator.Send(new DeleteTaskCommand(taskId));
+            return NoContent();
+        }
+        [HttpPut("tasks")]
+        public async Task<IActionResult> EditTask(EditTaskCommand editTaskCommand)
+            => Ok(await _mediator.Send(editTaskCommand));
     }
 }

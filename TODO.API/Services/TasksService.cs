@@ -1,6 +1,7 @@
 ﻿using DB.Models;
 using Domain.DTO;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace TODO.API.Services
 {
@@ -21,7 +22,7 @@ namespace TODO.API.Services
                 IsCompleted = taskData.IsCompleted,
                 Deadline = taskData.Deadline,
                 Description = taskData.Description,
-                Priority = taskData.Priority,
+                Priority = taskData.Priority
             });
             await _context.SaveChangesAsync();
             return task.Entity;
@@ -37,14 +38,34 @@ namespace TODO.API.Services
                                    Priority = task.Priority,
                                    IsCompleted= task.IsCompleted,
                                    Name = task.Name,
+                                   Id = task.Id
                                }).ToListAsync();
 
         public async Task DeleteTask(Guid taskId)
         {
             var task = await _context.Tasks.FindAsync(taskId);
             if (task != null)
+            {
                 _context.Tasks.Remove(task);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
         }
+        public async Task<TaskDTO> EditTask(TaskDTO newTask)
+        {
+            var task = await _context.Tasks.FindAsync(newTask.Id);
+            if (task != null)
+            {
+                task.Description = newTask.Description ?? task.Description;
+                task.Name = newTask.Name ?? task.Name;
+                task.Deadline = newTask.Deadline;
+                task.Priority = newTask.Priority;
+                task.IsCompleted = newTask.IsCompleted;
+            }
+            await _context.SaveChangesAsync();
+            return newTask;
+        }
+
+        public async Task<bool> TaskExists(string taskId)
+            => (await _context.Tasks.FindAsync(taskId)) != null;
     }
 }
