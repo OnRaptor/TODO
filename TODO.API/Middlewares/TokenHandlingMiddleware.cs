@@ -25,7 +25,7 @@ namespace TODO.API.Middlewares
                     }
                 }
             }
-            
+
             await _next(context);
         }
     }

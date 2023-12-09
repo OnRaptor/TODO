@@ -1,7 +1,5 @@
-﻿using Domain.DTO;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TODO.API.Handlers.Commands;
 using TODO.API.Handlers.Queries;
@@ -30,6 +28,6 @@ namespace TODO.API.Controllers
         [Authorize]
         [HttpGet("userinfo")]
         public async Task<IActionResult> GetUserInfo()
-            => Ok(await _mediator.Send(new GetUserInfoQuery(User?.Claims.FirstOrDefault()?.Value)));
+            => Ok(await _mediator.Send(new GetUserInfoQuery(Guid.Parse(User?.Claims.FirstOrDefault()?.Value))));
     }
 }

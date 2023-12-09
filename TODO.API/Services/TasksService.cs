@@ -1,7 +1,6 @@
 ﻿using DB.Models;
 using Domain.DTO;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace TODO.API.Services
 {
@@ -30,16 +29,16 @@ namespace TODO.API.Services
 
         public async Task<List<TaskDTO>> GetAllUserTask(Guid authorId)
             => await (from task in _context.Tasks
-                               where task.AuthorId == authorId
-                               select new TaskDTO 
-                               {
-                                   Deadline = task.Deadline,
-                                   Description = task.Description,  
-                                   Priority = task.Priority,
-                                   IsCompleted= task.IsCompleted,
-                                   Name = task.Name,
-                                   Id = task.Id
-                               }).ToListAsync();
+                      where task.AuthorId == authorId
+                      select new TaskDTO
+                      {
+                          Deadline = task.Deadline,
+                          Description = task.Description,
+                          Priority = task.Priority,
+                          IsCompleted = task.IsCompleted,
+                          Name = task.Name,
+                          Id = task.Id
+                      }).ToListAsync();
 
         public async Task DeleteTask(Guid taskId)
         {
@@ -65,7 +64,7 @@ namespace TODO.API.Services
             return newTask;
         }
 
-        public async Task<bool> TaskExists(string taskId)
+        public async Task<bool> TaskExists(Guid taskId)
             => (await _context.Tasks.FindAsync(taskId)) != null;
     }
 }

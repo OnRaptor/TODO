@@ -12,8 +12,8 @@ using TODO.API;
 namespace TODO.API.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20231207072944_Initial")]
-    partial class Initial
+    [Migration("20231209160944_Final")]
+    partial class Final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace TODO.API.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("Deadline")
+                    b.Property<DateTime?>("Deadline")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")

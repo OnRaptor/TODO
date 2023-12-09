@@ -9,8 +9,8 @@ namespace TODO.API.Validators.Commands
         public RegisterUserValidator(UserService _userService)
         {
             RuleFor(x => x.user)
-                .NotNull().WithMessage("User не может быть пустым");
-            RuleFor(x => x.user.Name).Length(5, 20).WithMessage("Мин длина - 5, макс - 20");
+                .NotNull().WithMessage("User can't be empty");
+            RuleFor(x => x.user.Name).Length(5, 20).WithMessage("Min length - 5, max - 20");
             RuleFor(x => x.user.Name)
                 .MustAsync(
                 async (x, canc) =>
@@ -18,9 +18,9 @@ namespace TODO.API.Validators.Commands
                     var result = await _userService.FindUserByUserName(x);
                     return result == null;
                 }
-                ).WithMessage("Никнейм занят");
+                ).WithMessage("Nickname already taken");
             RuleFor(x => x.password)
-                .Length(10, 20).WithMessage("Мин длина - 10, макс - 20");
+                .Length(10, 20).WithMessage("Min length - 10, max - 20");
         }
     }
 }

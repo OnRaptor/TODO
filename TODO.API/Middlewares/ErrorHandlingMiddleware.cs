@@ -1,10 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Linq;
-using TODO.API.Common;
-
-namespace TODO.API.Middlewares
+﻿namespace TODO.API.Middlewares
 {
     public class ErrorHandlingMiddleware
     {

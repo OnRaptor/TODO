@@ -1,6 +1,5 @@
 ﻿using DB.Models;
 using Domain.DTO;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TODO.API.Common;
 
@@ -9,17 +8,17 @@ namespace TODO.API.Services
     public class UserService
     {
         private readonly APIContext _context;
-        public UserService(APIContext _context) 
+        public UserService(APIContext _context)
         {
             this._context = _context;
         }
 
         public async Task<User> CreateUser(UserDTO userData, string password)
         {
-            var user = await _context.Users.AddAsync(new() 
+            var user = await _context.Users.AddAsync(new()
             {
                 UserName = userData.Name,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(AuthOptions.MAGIC)
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
             });
             await _context.SaveChangesAsync();
             return user.Entity;
@@ -34,28 +33,20 @@ namespace TODO.API.Services
                        ).FirstOrDefaultAsync();
 
             if (user != null)
-                return BCrypt.Net.BCrypt.Verify(AuthOptions.MAGIC, user.PasswordHash);
-            else 
+                return BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+            else
                 return false;
         }
 
         public async Task<User?> FindUserByUserName(string username)
-        {
-            var match = await (
-                       from u in _context.Users
-                       where u.UserName == username
-                       select u
-                       ).FirstOrDefaultAsync();
+            => await (from u in _context.Users
+                      where u.UserName == username
+                      select u
+                        ).FirstOrDefaultAsync() ?? null;
 
-            return match ?? null;
-        }
 
-        public async Task<User?> FindUserByUUID(string UUID)
-        {
-            var uuid = Guid.Parse(UUID);
-            var match = await _context.Users.FindAsync(uuid);
+        public async Task<User?> FindUserByUUID(Guid uuid)
+            => await _context.Users.FindAsync(uuid) ?? null;
 
-            return match ?? null;
-        }
     }
 }

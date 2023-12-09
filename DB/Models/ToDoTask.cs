@@ -12,13 +12,10 @@ namespace DB.Models
     public class ToDoTask
     {
         public Guid Id {  get; set; }
-        [DefaultValue("Задача")]
         public string Name { get; set; }
-        [DefaultValue("Выполнить задачу")]
         public string Description { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime Deadline {  get; set; }
-        [DefaultValue(TaskPriority.High)]
+        public DateTime? Deadline { get; set; } = null;
         public TaskPriority Priority { get; set; }
         public bool IsCompleted { get; set; }
         public Guid AuthorId { get; set; }

@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Requests\**" />
+    <Compile Remove="Validators\Queries\**" />
     <Content Remove="Requests\**" />
+    <Content Remove="Validators\Queries\**" />
     <EmbeddedResource Remove="Requests\**" />
+    <EmbeddedResource Remove="Validators\Queries\**" />
     <None Remove="Requests\**" />
+    <None Remove="Validators\Queries\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +43,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DB\DB.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validators\Queries\" />
   </ItemGroup>
 
 </Project>

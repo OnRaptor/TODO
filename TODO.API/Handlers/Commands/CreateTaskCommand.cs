@@ -1,8 +1,5 @@
-﻿using DB.Models;
-using Domain.DTO;
-using Humanizer;
+﻿using Domain.DTO;
 using MediatR;
-using TODO.API.Handlers.Queries;
 using TODO.API.Services;
 
 namespace TODO.API.Handlers.Commands

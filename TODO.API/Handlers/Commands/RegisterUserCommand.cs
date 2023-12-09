@@ -1,5 +1,4 @@
-﻿using DB.Models;
-using Domain.DTO;
+﻿using Domain.DTO;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

@@ -1,7 +1,6 @@
 ﻿using Domain.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TODO.API.Handlers.Commands;
 using TODO.API.Handlers.Queries;
@@ -23,15 +22,18 @@ namespace TODO.API.Controllers
         [HttpPost("tasks")]
         public async Task<IActionResult> CreateTask(TaskDTO taskData)
             => Ok(await _mediator.Send(new CreateTaskCommand(taskData, User.Claims.FirstOrDefault().Value)));
+
         [HttpGet("tasks")]
         public async Task<IActionResult> GetUserTasks()
             => Ok(await _mediator.Send(new GetTasksQuery(User.Claims.FirstOrDefault().Value)));
-        [HttpDelete("tasks/{taskId}")]
-        public async Task<IActionResult> DeleteTask(string taskId)
+
+        [HttpDelete("tasks")]
+        public async Task<IActionResult> DeleteTask(DeleteTaskCommand request)
         {
-            await _mediator.Send(new DeleteTaskCommand(taskId));
+            await _mediator.Send(request);
             return NoContent();
         }
+
         [HttpPut("tasks")]
         public async Task<IActionResult> EditTask(EditTaskCommand editTaskCommand)
             => Ok(await _mediator.Send(editTaskCommand));

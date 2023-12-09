@@ -1,11 +1,10 @@
-﻿using DB.Models;
-using Domain.DTO;
+﻿using Domain.DTO;
 using MediatR;
 using TODO.API.Services;
 
 namespace TODO.API.Handlers.Queries
 {
-    public record GetUserInfoQuery(string? userId) : IRequest<UserDTO>;
+    public record GetUserInfoQuery(Guid userId) : IRequest<UserDTO>;
     public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDTO>
     {
         public UserService _userService;
@@ -15,7 +14,7 @@ namespace TODO.API.Handlers.Queries
         }
         public async Task<UserDTO> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
         {
-            if (request.userId == null) 
+            if (request.userId == null)
                 throw new BadHttpRequestException("No token");
             var user = await _userService.FindUserByUUID(request.userId);
             return new UserDTO() { Name = user!.UserName };

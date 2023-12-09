@@ -1,6 +1,4 @@
-﻿using DB.Models;
-using Domain.DTO;
-using MediatR;
+﻿using MediatR;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +7,10 @@ using TODO.API.Services;
 
 namespace TODO.API.Handlers.Commands
 {
-    public record AuthUserCommand(string username, string password) : IRequest<string>;
+    public record AuthUserCommand(
+        string username,
+        string password)
+        : IRequest<string>;
     public class AuthUserCommandHandler : IRequestHandler<AuthUserCommand, string>
     {
         public UserService _userService;
@@ -36,7 +37,7 @@ namespace TODO.API.Handlers.Commands
             }
             else
             {
-                throw new BadHttpRequestException("Invalid data");
+                throw new BadHttpRequestException("Invalid auth data");
             }
         }
     }
