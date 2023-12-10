@@ -10,6 +10,7 @@ namespace TODO.API.Controllers
     [Route("api/")]
     [Authorize]
     [ApiController]
+    [Produces("application/json")]
     public class TasksController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,12 +21,12 @@ namespace TODO.API.Controllers
         public TasksController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost("tasks")]
-        public async Task<IActionResult> CreateTask(TaskDTO taskData)
-            => Ok(await _mediator.Send(new CreateTaskCommand(taskData, User.Claims.FirstOrDefault().Value)));
+        public async Task<string> CreateTask(TaskDTO taskData)
+            => await _mediator.Send(new CreateTaskCommand(taskData, User.Claims.FirstOrDefault().Value));
 
         [HttpGet("tasks")]
-        public async Task<IActionResult> GetUserTasks()
-            => Ok(await _mediator.Send(new GetTasksQuery(User.Claims.FirstOrDefault().Value)));
+        public async Task<List<TaskDTO>> GetUserTasks()
+            => await _mediator.Send(new GetTasksQuery(User.Claims.FirstOrDefault().Value));
 
         [HttpDelete("tasks")]
         public async Task<IActionResult> DeleteTask(DeleteTaskCommand request)
@@ -35,7 +36,7 @@ namespace TODO.API.Controllers
         }
 
         [HttpPut("tasks")]
-        public async Task<IActionResult> EditTask(EditTaskCommand editTaskCommand)
-            => Ok(await _mediator.Send(editTaskCommand));
+        public async Task<TaskDTO> EditTask(EditTaskCommand editTaskCommand)
+            => await _mediator.Send(editTaskCommand);
     }
 }

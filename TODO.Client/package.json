@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "openapi-typescript-codegen": "^0.25.0"
+  },
+  "scripts":{
+    "generate-client" : "openapi --input swagger.json --output ./generated --client axios --name AppClient",
+    "generate" : "npm run generate-client"
+  }
+}

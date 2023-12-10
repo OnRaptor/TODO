@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.DTO;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TODO.API.Handlers.Commands;
@@ -8,6 +9,7 @@ namespace TODO.API.Controllers
 {
     [Route("api/")]
     [ApiController]
+    [Produces("application/json")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,16 +20,16 @@ namespace TODO.API.Controllers
         public UserController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserCommand request)
-            => Ok(await _mediator.Send(request));
+        public async Task<string> Register(RegisterUserCommand request)
+            => await _mediator.Send(request);
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(AuthUserCommand request)
-            => Ok(await _mediator.Send(request));
+        public async Task<string> Login(AuthUserCommand request)
+            => await _mediator.Send(request);
 
         [Authorize]
         [HttpGet("userinfo")]
-        public async Task<IActionResult> GetUserInfo()
-            => Ok(await _mediator.Send(new GetUserInfoQuery(Guid.Parse(User?.Claims.FirstOrDefault()?.Value))));
+        public async Task<UserDTO> GetUserInfo()
+            => await _mediator.Send(new GetUserInfoQuery(Guid.Parse(User?.Claims.FirstOrDefault()?.Value)));
     }
 }
