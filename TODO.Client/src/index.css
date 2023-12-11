@@ -13,14 +13,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,
 body{
-  height: 100vh;
+  min-height: 100%;
 }
 
 #root{
-  height: 100vh;
+  min-height: 100%;
 }
 
 #root > div{
-  height: 100vh;
+  min-height: 100vh;
+}
+
+:is(.light .light\:bg-green-300) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
 }

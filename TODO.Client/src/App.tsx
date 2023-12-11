@@ -1,26 +1,37 @@
 window.global ||= window;
 
-import { useState } from 'react'
-import './App.css'
-import useDarkMode from "use-dark-mode";
-import { Card, CardHeader, Avatar, Button, CardBody, CardFooter } from '@nextui-org/react';
-import React from 'react';
-import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { useEffect } from 'react';
+import './App.css';
 import Header from './components/Header';
-import AuthPage from './pages/AuthPage';
 import { useUserStore } from './store/UserStore';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useApiStore } from './store/ApiStore';
+import TaskEditModal from './pages/TaskEditModal';
 
 export default function App() {
-  const darkMode = useDarkMode(false);
-  let isAuth = useUserStore(store => store.isAuthenticated);
-  let userName = useUserStore(store => store.userName);
+  const isAuth = useApiStore(store => store.isAuthenticated);
+  const userName = useUserStore(store => store.userName);
+  const navigate = useNavigate();
+  const token = useApiStore(store => store.token);
+  const init = useApiStore(store => store.init);
 
+
+  useEffect(()=>{
+    if (token && useApiStore.persist.hasHydrated()){
+      console.log("Reading token...");
+      init(token);
+    }
+
+    if (!isAuth)
+      navigate("/login");
+
+  },[])
+  
   return (
-    <main className={`${darkMode.value ? 'dark' : ''} text-foreground bg-background h-full`}>
-      <div className='container max-md: flex items-center flex-col max-h-full'>
-        <Header isAuth={isAuth} userName={userName}/>
-        <AuthPage/>
-      </div>
-    </main>
+    <div className='container flex items-center flex-col max-w-screen-md'>
+      <Header isAuth={isAuth} userName={userName}/>
+      <Outlet/>
+      <TaskEditModal/>
+    </div>
   )
 }

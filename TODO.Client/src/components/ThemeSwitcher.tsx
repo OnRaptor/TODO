@@ -1,17 +1,21 @@
 import useDarkMode from "use-dark-mode";
-import {Button} from "@nextui-org/react";
+import {Switch} from "@nextui-org/react";
 import { MdDarkMode, MdLightMode  } from "react-icons/md";
 
 export const ThemeSwitcher = () => {
-  const darkMode = useDarkMode(false);
+  const darkMode = useDarkMode(false, 
+    {
+      classNameDark: "dark",
+      classNameLight: "light"
+    });
 
   return (
-    <Button variant="light" isIconOnly onClick={darkMode.toggle}>
-        {
-          darkMode.value ?
-          <MdLightMode/> :
-          <MdDarkMode/> 
-        }
-    </Button>
+    <Switch
+      endContent={<MdDarkMode />}
+      isSelected={darkMode.value}
+      size="lg"
+      startContent={<MdLightMode />}
+      onChange={darkMode.toggle}
+  />
   )
 };

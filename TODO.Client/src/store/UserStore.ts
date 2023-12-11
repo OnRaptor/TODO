@@ -1,37 +1,29 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { jwtDecode } from "jwt-decode";
 
 interface UsersState{
-    isAuthenticated: boolean;
-    token: string | null;
-    tokenValidDateTime: Date | null;
     userName: string | null;
-    addAuthData(token: string): void;
+}
+
+interface Actions{
     addUser(userName: string): void;
 }
 
-export const useUserStore = create<UsersState>()(
+const initialState: UsersState = {
+    userName: null
+}
+
+export const useUserStore = create<UsersState & Actions>()(
     persist(
         (set) => ({
-            isAuthenticated: false,
-            token: null,
-            tokenValidDateTime: null,
-            userName: null,
-            addAuthData: (token: string) => set(state => (
-                {
-                    token: token,
-                    tokenValidDateTime: new Date(jwtDecode(token).exp ?? 0),
-                    isAuthenticated: true
-                }
-            )),
-            addUser: (userName: string) => set(state => (
+            ...initialState,
+            addUser: (userName: string) => set(
                 {
                     userName: userName
                 }
-            ))
+            )
         }),
         {
-            name: 'auth-storage'
+            name: 'user-storage'
         })
     );
