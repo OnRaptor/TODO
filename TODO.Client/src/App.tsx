@@ -8,14 +8,17 @@ import React from 'react';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import Header from './components/Header';
 import AuthPage from './pages/AuthPage';
+import { useUserStore } from './store/UserStore';
 
 export default function App() {
   const darkMode = useDarkMode(false);
+  let isAuth = useUserStore(store => store.isAuthenticated);
+  let userName = useUserStore(store => store.userName);
 
   return (
     <main className={`${darkMode.value ? 'dark' : ''} text-foreground bg-background h-full`}>
       <div className='container max-md: flex items-center flex-col max-h-full'>
-        <Header isAuth={false}/>
+        <Header isAuth={isAuth} userName={userName}/>
         <AuthPage/>
       </div>
     </main>
