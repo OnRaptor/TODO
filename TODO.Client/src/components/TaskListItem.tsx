@@ -3,6 +3,7 @@ import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
 import { MdModeEditOutline, MdDelete } from "react-icons/md";
 import { TaskDTO } from "../api";
 import { dispatch } from "use-bus";
+import { ReactNode } from "react";
 
 interface Props{
     task:TaskDTO;
@@ -14,12 +15,23 @@ const TaskListItem = ({task, onDeleteClick, onMarkClick}: Props) => {
     //const [isHovering, setIsHovering] = useState(false);
 
     return ( 
-        <Accordion className={`mb-3 ${task.isCompleted && 'dark:bg-green-950 light:bg-green-300 '}`} variant="bordered">
+        <Accordion className={`w-full mb-3 ${task.isCompleted && 'dark:bg-green-950 light:bg-green-300 '}`} variant="bordered">
             <AccordionItem 
-                title={task.name}
+                className="max-w-full"
+                title={<p className="truncate">{task.name}</p>}
                 subtitle={
                     <div className="flex gap-2">
-                        <p>Priority: {task.priority?.toString()}</p>
+                        <p>Priority: {
+                            (() : ReactNode => {
+                                if (task.priority === 0)
+                                    return "Low";
+                                else if (task.priority === 1)
+                                    return "Medium"
+                                else if (task.priority === 2)
+                                        return "High";
+                            })()
+                        }
+                        </p>
                         {task.deadline &&
                             <p>✱ Deadline: {new Date(task.deadline ?? "").toLocaleString()}</p>
                         }
