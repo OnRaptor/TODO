@@ -7,7 +7,7 @@ using TODO.API.Handlers.Queries;
 
 namespace TODO.API.Controllers
 {
-    [Route("/")]
+    [Route("/api")]
     [ApiController]
     [Produces("application/json")]
     public class UserController : ControllerBase

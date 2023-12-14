@@ -20,7 +20,7 @@ const initialState: ApiStoreState = {
     tokenValidDateTime: null,
     token: "",
     client: new AppClient({
-        BASE: "http://localhost"
+        BASE: "http://localhost:4000"
     }),
   }
 
