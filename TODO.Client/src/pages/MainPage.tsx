@@ -4,12 +4,14 @@ import { TaskDTO } from "../api";
 import { orderBy } from 'lodash';
 import { useApiStore } from "../store/ApiStore";
 import useBus from "use-bus";
+import { useTranslation } from "react-i18next";
 
 
 const MainPage = () => {
     const [todos, setTodos] = useState<Array<TaskDTO>>();
     const apiClient = useApiStore(store => store.client);
-    
+    const {t} = useTranslation();
+
     useEffect(() => {
         loadTasks();
     }, []);
@@ -48,6 +50,9 @@ const MainPage = () => {
                 key={todo.id}
                 />
         )
+        }
+        {todos?.length === 0 && 
+            <p className="w-full text-center">{t("OutOfTodosMessage")}</p>
         }
     </div> );
 }

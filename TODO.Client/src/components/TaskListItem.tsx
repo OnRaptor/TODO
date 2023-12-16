@@ -4,6 +4,7 @@ import { MdModeEditOutline, MdDelete } from "react-icons/md";
 import { TaskDTO } from "../api";
 import { dispatch } from "use-bus";
 import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props{
     task:TaskDTO;
@@ -12,7 +13,7 @@ interface Props{
 }
 
 const TaskListItem = ({task, onDeleteClick, onMarkClick}: Props) => {
-    //const [isHovering, setIsHovering] = useState(false);
+    const {t} = useTranslation();
 
     return ( 
         <Accordion className={`w-full mb-3 ${task.isCompleted && 'dark:bg-green-950 light:bg-green-300 '}`} variant="bordered">
@@ -21,19 +22,19 @@ const TaskListItem = ({task, onDeleteClick, onMarkClick}: Props) => {
                 title={<p className="truncate">{task.name}</p>}
                 subtitle={
                     <div className="flex gap-2">
-                        <p>Priority: {
+                        <p>{t("PriorityLabel")} {
                             (() : ReactNode => {
                                 if (task.priority === 0)
-                                    return "Low";
+                                    return t("LowStatus");
                                 else if (task.priority === 1)
-                                    return "Medium"
+                                    return t("MediumStatus")
                                 else if (task.priority === 2)
-                                        return "High";
+                                        return t("HighStatus");
                             })()
                         }
                         </p>
                         {task.deadline &&
-                            <p>✱ Deadline: {new Date(task.deadline ?? "").toLocaleString()}</p>
+                            <p>✱ {t("")} {new Date(task.deadline ?? "").toLocaleString()}</p>
                         }
                     </div>
                 }>
@@ -58,44 +59,6 @@ const TaskListItem = ({task, onDeleteClick, onMarkClick}: Props) => {
                 </div>
             </AccordionItem>
         </Accordion>
-    // <Card 
-    //     className={`mt-2 w-full 
-    //         ${task.isCompleted && 'bg-green-800'} 
-    //         ${(task.priority === 2 && !task.isCompleted) && 'bg-blue-500'}
-    //         ${(task.priority === 0 && !task.isCompleted) && 'bg-blue-700'}
-    //         `
-    //     }
-    //     onMouseOver={() => setIsHovering(true)}
-    //     onMouseLeave={() => setIsHovering(false)}
-    // >
-    //     <CardHeader className="flex justify-between items-center h-10 m-2">
-    //         <p className="text-xl">
-    //             {task.name}
-    //         </p>
-    //         {isHovering &&
-    //             <div className='gap-2 flex'>
-    //                 <Button onClick={()=> onMarkClick(task)} className="m-0" size="md" variant="light" color="success" isIconOnly>
-    //                     <IoCheckmarkSharp/>
-    //                 </Button>
-    //                 <Button className="m-0" size="md" variant="light" color="warning" isIconOnly>
-    //                     <MdModeEditOutline/>
-    //                 </Button>
-    //                 <Button onClick={()=> onDeleteClick(task.id)} className="m-0" size="md" variant="light" isIconOnly color="danger">
-    //                     <MdDelete/>
-    //                 </Button>
-    //             </div>
-    //         }
-    //     </CardHeader>
-    //     <Divider/>
-    //     <CardBody className="pb-0">
-    //         <p className="overflow-hidden max-h-12 text-gray-400">
-    //             {task.description}
-    //         </p>
-    //     </CardBody>
-    //     <CardFooter className="flex justify-end p-0 px-5">
-    //         <p className="text-sm text-gray-400">Deadline: {task.deadline}</p>
-    //     </CardFooter>
-    // </Card>
     );
 }
  

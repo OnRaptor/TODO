@@ -10,8 +10,7 @@ import {
 import AuthPage from './pages/AuthPage.tsx'
 import RegisterPage from './pages/RegisterPage.tsx'
 import MainPage from './pages/MainPage.tsx'
-import { useApiStore } from './store/ApiStore.ts'
-
+import './i18n/config.ts';
 
 const router = createBrowserRouter([
   {

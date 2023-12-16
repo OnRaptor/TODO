@@ -7,6 +7,7 @@ import { useUserStore } from './store/UserStore';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useApiStore } from './store/ApiStore';
 import TaskEditModal from './pages/TaskEditModal';
+import PickLangugageModal from './pages/PickLanguageModal';
 
 export default function App() {
   const isAuth = useApiStore(store => store.isAuthenticated);
@@ -32,6 +33,7 @@ export default function App() {
       <Header isAuth={isAuth} userName={userName}/>
       <Outlet/>
       <TaskEditModal/>
+      <PickLangugageModal/>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import useBus, { dispatch } from "use-bus";
 import { useApiStore } from "../store/ApiStore";
 import { ApiError } from "../api/core/ApiError";
 import { TaskDTO } from "../api";
+import { useTranslation } from "react-i18next";
 
 const TaskEditModal = () => {
     const {isOpen,onOpen,onOpenChange, onClose} = useDisclosure();
@@ -19,6 +20,8 @@ const TaskEditModal = () => {
     const [error, setError] = useState<string>("");
     const [uuid, setUuid] = useState<string>("");
     const apiClient = useApiStore(store => store.client); 
+    const {t} = useTranslation();
+
 
     useBus(
         'showCreateTask',
@@ -53,6 +56,7 @@ const TaskEditModal = () => {
         setTime(new Date(task.deadline).toLocaleTimeString());
         setMark(task.isCompleted);
         setUuid(task.id);
+        setError("");
         onOpen();
     }
 
@@ -86,6 +90,12 @@ const TaskEditModal = () => {
 
     const saveFn = async () =>{
         try{
+            if (checkDate(new Date(date + ", " + time))) 
+            {
+                setError("Invalid date");
+                return;
+            }
+
             if (isEditing)
                 await editTask();
             else
@@ -97,7 +107,7 @@ const TaskEditModal = () => {
         catch(e){
             console.log(e);
             if (e instanceof ApiError) {
-                setError(e.message);
+                setError("Error occured: " + e.message);
             }
         }
     }
@@ -107,6 +117,10 @@ const TaskEditModal = () => {
         dispatch("refreshTasks");
         onClose();
     };
+
+    const checkDate = (date) => {
+        return new Date().getTime() > date.getTime();
+    }
 
     return ( 
     <>
@@ -125,10 +139,10 @@ const TaskEditModal = () => {
                 <>
                     <ModalHeader className="flex flex-col gap-3">
                         <p>
-                            {isEditing ? "Edit task" : "Create task"}
+                            ToDo
                         </p>
                         <Input
-                            label="Title"
+                            label={t('TitleLabel')}
                             value={title}
                             variant="flat"
                             onChange={e => setTitle(e.target.value)}
@@ -136,20 +150,20 @@ const TaskEditModal = () => {
                     </ModalHeader>
                     <ModalBody>
                     <RadioGroup
-                          label="Task priority"
+                          label={t('PriorityLabel')}
                           orientation="horizontal"
                           value={priority}
                           onValueChange={setPriority}
                         >
-                          <Radio value="0">Low</Radio>
-                          <Radio value="1">Medium</Radio>
-                          <Radio value="2">High</Radio>
+                          <Radio value="0">{t("LowStatus")}</Radio>
+                          <Radio value="1">{t("MediumStatus")}</Radio>
+                          <Radio value="2">{t("HighStatus")}</Radio>
                         </RadioGroup>
                         <div className="flex gap-3">
                             <Input 
                                 variant="flat"
                                 type="date"
-                                label="Deadline date"
+                                label={t("DeadlineDateLabel")}
                                 value={date}
                                 onValueChange={setDate}
                             />
@@ -157,13 +171,13 @@ const TaskEditModal = () => {
                             <Input 
                                 variant="flat"
                                 type="time"
-                                label="Deadline time"
+                                label={t("DeadlineTimeLabel")}
                                 value={time}
                                 onValueChange={setTime}
                             />
                         </div>
                         <Textarea
-                            label="Description"
+                            label={t('DescriptionLabel')}
                             variant="flat"
                             value={description}
                             onChange={e => setDescription(e.target.value)}
@@ -197,8 +211,8 @@ const TaskEditModal = () => {
                             }
                         </div>
                         <div className="gap-1 flex">
-                            <Button onClick={saveFn} color="primary" variant="solid">Save</Button>
-                            <Button color="secondary" onPress={onClose} variant="light">Discard</Button>
+                            <Button onClick={saveFn} color="primary" variant="solid">{t('SaveBtn')}</Button>
+                            <Button color="secondary" onPress={onClose} variant="light">{t('DiscardBtn')}</Button>
                         </div>
                     </ModalFooter>
                 </>
